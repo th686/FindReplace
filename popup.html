@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Find / Replace Rules</title>
+	<style>
+		body { font-family: system-ui, Arial, sans-serif; margin: 0; padding: 10px; width: 560px; }
+		body.compact { width:420px; }
+		body.expanded { width:720px; }
+		h1 { font-size: 16px; margin: 0 0 8px; }
+		button { cursor: pointer; }
+		.groups { display: flex; flex-direction: column; gap: 12px; }
+		.group { border: 1px solid #ccc; border-radius: 6px; padding: 8px; background:#fafafa; }
+		.group.disabled { opacity: .55; }
+		.group-header { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+		.group-header input.group-name { flex: 1; font-weight: 600; }
+		.rules { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+			.rule { display: grid; grid-template-columns: 1fr 1fr 50px 34px minmax(72px,auto); gap: 4px; align-items: start; }
+		.rule.invalid input.pattern { border-color: #d22; background: #ffecec; }
+		.rule input { width: 100%; box-sizing: border-box; }
+			.rule .row-tools { display:flex; gap:2px; flex-wrap:wrap; justify-content:flex-end; }
+			.rule .row-tools .mini { padding:2px 4px; }
+			@media (max-width:520px){
+				.rule { grid-template-columns: 1fr 1fr 44px 30px minmax(60px,auto); }
+			}
+		.mini { font-size: 11px; padding:2px 6px; }
+		.toolbar { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+		.summary { font-size: 11px; margin-top: 6px; max-height: 90px; overflow:auto; white-space: pre-wrap; background:#f0f0f0; padding:4px; border-radius:4px; }
+		.empty { font-size: 12px; color:#666; }
+		fieldset { border:none; padding:0; margin:0; }
+		legend { font-size: 13px; font-weight: 600; }
+		.divider { height:1px; background:#ddd; margin:6px 0; }
+		.flags { width: 54px; }
+	</style>
+</head>
+<body>
+	<h1>Find / Replace</h1>
+		<div class="toolbar">
+		<select id="groupSelect" title="Select group" style="max-width:180px"></select>
+		<button id="addGroup">+ Group</button>
+		<button id="runAll" title="Run the currently selected group on the page">Run Group</button>
+		<button id="exportBtn" class="mini" title="Export JSON">Export</button>
+		<button id="importBtn" class="mini" title="Import JSON">Import</button>
+			<button id="toggleExpand" class="mini" title="Toggle width">⇔</button>
+			<button id="openFull" class="mini" title="Open in a full tab">⛶</button>
+		<input type="file" id="importFile" accept="application/json" style="display:none" />
+	</div>
+	<div id="groups" class="groups"></div>
+	<div id="emptyState" class="empty">No groups yet. Click "+ Group" to start.</div>
+	<div class="divider"></div>
+	<div class="summary" id="runSummary" hidden></div>
+	<div style="margin-top:6px;font-size:11px;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+		<label>Hotkey Slot:
+			<select id="hotkeySlot" title="Assign a slot 1-10 for this group" style="font-size:11px">
+				<option value="">(none)</option>
+			</select>
+		</label>
+		<button id="saveSlot" class="mini" title="Save slot assignment">Save Slot</button>
+		<span id="slotStatus" style="color:#2a6"></span>
+	</div>
+	<script src="popup.js"></script>
+</body>
+</html>

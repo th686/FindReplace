@@ -1,0 +1,42 @@
+{
+    "manifest_version": 3,
+    "name": "Find/Replace",
+    "version": "0.0.0.1",
+    "description": "A Chrome extension to find and replace text on web pages using regex.",
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "scripting",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "1024": "images/icon-1024.png"
+        }
+    },
+    "icons": {
+        "1024": "images/icon-1024.png"
+    },
+        "background": {
+            "service_worker": "background.js"
+        },
+        "commands": {
+            "run_group_slot_1": { "description": "Run Group Slot 1" },
+            "run_group_slot_2": { "description": "Run Group Slot 2" },
+            "run_group_slot_3": { "description": "Run Group Slot 3" },
+            "run_group_slot_4": { "description": "Run Group Slot 4" },
+            "run_group_slot_5": { "description": "Run Group Slot 5" },
+            "run_group_slot_6": { "description": "Run Group Slot 6" },
+            "run_group_slot_7": { "description": "Run Group Slot 7" },
+            "run_group_slot_8": { "description": "Run Group Slot 8" },
+            "run_group_slot_9": { "description": "Run Group Slot 9" }
+        },
+    "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
