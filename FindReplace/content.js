@@ -42,6 +42,16 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 							el.textContent = newText;
 							el.dispatchEvent(new Event('input', { bubbles: true }));
 						}
+						// Also replace text inside <span> elements within this editable host
+						const spans = el.querySelectorAll('span');
+						spans.forEach(span => {
+							const oldSpanText = span.textContent;
+							const newSpanText = oldSpanText.replace(regex, () => { replacements++; return r.replacement; });
+							if (newSpanText !== oldSpanText) {
+								span.textContent = newSpanText;
+								span.dispatchEvent(new Event('input', { bubbles: true }));
+							}
+						});
 					}
 				});
 				groupReplacements += replacements;
