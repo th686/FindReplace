@@ -12,20 +12,26 @@ function getEditableElements() {
 }
 
 function replaceTextInNodes(element, regex, replacement, onReplace) {
-    const walker = document.createTreeWalker(
-        element,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-    );
-    
-    const textNodes = [];
-    let node;
-    while (node = walker.nextNode()) {
-        textNodes.push(node);
+    // Re-collect text nodes each time to ensure we work with current DOM state
+    function getTextNodes() {
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+        
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+        return textNodes;
     }
     
     let changed = false;
+    let textNodes = getTextNodes();
+    
     textNodes.forEach(textNode => {
         const oldText = textNode.textContent;
         const newText = oldText.replace(regex, (match) => {
